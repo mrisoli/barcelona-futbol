@@ -8,6 +8,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env/server.mjs";
 import { prisma } from "./db";
+import { UserRole } from "@/types/user.js";
 
 /**
  * Module augmentation for `next-auth` types.
@@ -20,7 +21,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      admin: boolean;
+      role: UserRole;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];

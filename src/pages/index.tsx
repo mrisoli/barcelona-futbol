@@ -4,10 +4,10 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
-import {UserRole} from "@/types";
+import { UserRole } from "@/types";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const nextMatch = api.matchday.nextMatchday.useQuery();
 
   return (
     <>
@@ -22,9 +22,23 @@ const Home: NextPage = () => {
             Futbol <span className="text-pink">Check-in</span> App
           </h1>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
+            {nextMatch.data ? (
+              <>
+                <p className="text-2xl text-white">
+                  {nextMatch.data?.date.toString()} - {nextMatch.data?.location}
+                </p>
+                <p className="text-2xl text-white">
+                  {nextMatch.data?.location} - {nextMatch.data?.address}
+                </p>
+                <p className="text-2xl text-white">
+                  {nextMatch.data?.total} - {nextMatch.data?.fee}
+                </p>
+              </>
+            ) : (
+              <p className="text-2xl text-white">
+                No matchdays available. Please check back later.
+              </p>
+            )}
             <AuthShowcase />
           </div>
         </div>

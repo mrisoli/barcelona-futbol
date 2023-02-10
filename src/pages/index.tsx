@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     <>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          New football <span className="text-pink">Check-in</span> App
+          New football <span className="text-pink">Check-in</span> App update
         </h1>
         <div className="flex flex-col items-center gap-2">
           {nextMatch.data ? (

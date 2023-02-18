@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "./trpc";
 import { matchdayRouter } from "./routers/matchday";
+import { attendanceRouter } from "./routers/attendance";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { matchdayRouter } from "./routers/matchday";
  */
 export const appRouter = createTRPCRouter({
   matchday: matchdayRouter,
+  attendance: attendanceRouter,
 });
 
 // export type definition of API

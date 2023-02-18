@@ -13,17 +13,12 @@ export const attendanceRouter = createTRPCRouter({
       return attendances;
     }),
   checkIn: protectedProcedure
-    .input(
-      z.object({
-        matchdayId: z.string(),
-        userId: z.string(),
-      })
-    )
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
       const attendance = await ctx.prisma.attendance.create({
         data: {
-          matchdayId: input.matchdayId,
-          userId: input.userId,
+          matchdayId: input,
+          userId: ctx.session.user.id,
         },
       });
       return attendance;
@@ -49,13 +44,11 @@ export const attendanceRouter = createTRPCRouter({
       });
       return {};
     }),
-  getDebts: protectedProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.attendance.findMany({
-        where: { userId: input, paid: false },
-      });
-    }),
+  getDebts: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.attendance.findMany({
+      where: { userId: ctx.session.user.id, paid: false },
+    });
+  }),
   getDebtors: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.attendance.findMany({
       where: {

@@ -36,7 +36,7 @@ const NewMatchdayPage: NextPage = () => {
     }
   }, []);
   const handleSubmit = useCallback(
-    async (e: FormEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
       const safeDate = z.date().safeParse(new Date(matchDate));
       if (safeDate.success) {

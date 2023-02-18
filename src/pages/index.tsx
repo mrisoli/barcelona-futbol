@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 import { UserRole } from "@/types";
+import { NextMatch } from "@/components/next-match";
 
 const Home: NextPage = () => {
   const nextMatch = api.matchday.nextMatchday.useQuery();
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
               <p className="text-2xl text-white">
                 {nextMatch.data?.total} - {nextMatch.data?.fee}
               </p>
+              <NextMatch matchdayId={nextMatch.data?.id} />
             </>
           ) : (
             <p className="text-2xl text-white">

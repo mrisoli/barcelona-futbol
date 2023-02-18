@@ -8,7 +8,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env/server.mjs";
 import { prisma } from "./db";
-import { UserRole } from "@/types/user.js";
+import type { UserRole } from "@/types/user.js";
 
 /**
  * Module augmentation for `next-auth` types.

@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const matchdayRouter = createTRPCRouter({
-  matchdayCreate: publicProcedure
+  matchdayCreate: protectedProcedure
     .input(
       z.object({
-        date: z.date(),
+        date: z.number(),
         address: z.string(),
         location: z.string(),
         total: z.number(),
@@ -14,9 +14,11 @@ export const matchdayRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, ...req }) => {
+      const dateSchema = z.date().min(new Date());
+      const date = dateSchema.parse(new Date(req.input.date));
       const matchday = ctx.prisma.matchday.create({
         data: {
-          date: req.input.date,
+          date,
           address: req.input.address,
           location: req.input.location,
           total: req.input.total,
